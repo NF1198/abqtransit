@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>LiveRide</title>
+    <link rel="icon" type="image/png" href="../client/assets/image/bus_icon_red_48.png"> 
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script>
+        // utility script to manage asynchronous script loading with dependencies
+        var _pendingModules = [];
+        var _errorModules = [];
+        function loadModules() {
+            for (var idx = 0; idx < _pendingModules.length; idx++) {
+                var depsLoaded = true;
+                var depDef = _pendingModules[idx];
+                for (var jdx = 0; depDef.callback && depsLoaded && jdx < depDef.dependencies.length; jdx++) {
+                    var d = depDef.dependencies[jdx];
+                    var evaldep;
+                    try {
+                        evaldep = eval(d);
+                    } catch (e) {
+                        depsLoaded = false;
+                    }
+                }
+                if (depsLoaded) {
+                    if (depDef.callback) {
+                        depDef.callback();
+                        depDef.callback = null;
+                    }
+                }
+            }
+        }
+        function moduleLoaded() {
+            loadModules();
+        }
+        function registerDependency(depList, cb) {
+            _pendingModules.push({
+                dependencies: depList,
+                callback: cb
+            });
+            loadModules();
+        }
+        var _errorTimeoutID;
+        function moduleError(module) {
+            _errorModules.push(module.src);
+            if (_errorTimeoutID) {
+                window.clearTimeout(_errorTimeoutID);
+            }
+            _errorTimeoutID = window.setTimeout(function (event) {
+                alert("Error loading script(s): \n\n" + _errorModules.join(" \n\n"));
+                _errorTimeoutID = null;
+            }, 500);
+        }
+    </script>
+    <script>
+        let agency = "abq";
+        let agencyLong = "Albuquerque";
+        let timeZone = 'America/Denver';
+        let debug_stats = false;
+        let debug_level = 0;
+    </script>
+    <style>
+        .col-md-12 svg {
+            margin: auto;
+        }
+        
+        #details {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="container" class="debug container">
+        <div class="row">
+            <div class="col-md-12">
+                <svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                    id="map">
+                    <style>
+                        /* <![CDATA[ */
+                        
+                        .route-path {
+                            fill: none;
+                            stroke-miterlimit: 4;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                        }
+                        /* ]]> */
+                    </style>
+                    <defs>
+                        <!--<circle id="bus-icon" fill="yellow" stroke="black" stroke-width="1.5" r="10"/>-->
+                        <g width="20" height="20" id="bus-icon" style="display:inline">
+                            <path style="opacity:1;fill:#fc0;fill-opacity:1;stroke:black;stroke-width:1.60000002;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                                d="M 10,0.80000009 A 9.2000001,9.2000001 0 0 0 0.80000005,10 9.2000001,9.2000001 0 0 0 10,19.2 9.2000001,9.2000001 0 0 0 19.2,10 9.2000001,9.2000001 0 0 0 10,0.80000009 Z"
+                                id="circle" inkscape:connector-curvature="0" />
+                            <path style="color:black;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:black;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:black;solid-opacity:1;fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+                                d="m 11.470313,5.745313 0,3.190625 -10.3031257,0 0,2.128124 10.3031257,0 0,3.190625 L 18.832813,10 11.470313,5.745313 Z"
+                                id="arrow" inkscape:connector-curvature="0" />
+                        </g>
+                    </defs>
+                </svg>
+                <div><span id="details"></span></div>
+            </div>
+        </div>
+    </div>
+    <div id="mask"></div>
+
+    <script>
+        let ko = false;
+        let google = false;
+    </script>
+    <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/vendor/d3.v4.min.js"></script>
+    <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/base.bundle.js" charset="utf-8"></script>
+    <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/system.bundle.js" charset="utf-8"></script>
+</body>
+
+</html>

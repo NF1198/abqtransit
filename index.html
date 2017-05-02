@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="Albuquerque, NM Transit">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Albuquerque, NM</title>
+  <link rel="icon" type="image/png" href="../client/assets/image/bus_icon_red_48.png"> 
+  <!-- CSS -->
+  <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel='stylesheet' href='../client/assets/css/mps-main.css' type='text/css'>
+  <link rel='stylesheet' href='../client/assets/css/main.css' type='text/css'>
+  <!-- JS  -->
+  <script>
+    // utility script to manage asynchronous script loading with dependencies
+    var _pendingModules = [];
+    var _errorModules = [];
+    function loadModules() {
+      for (var idx = 0; idx < _pendingModules.length; idx++) {
+        var depsLoaded = true;
+        var depDef = _pendingModules[idx];
+        for (var jdx = 0; depDef.callback && depsLoaded && jdx < depDef.dependencies.length; jdx++) {
+          var d = depDef.dependencies[jdx];
+          var evaldep;
+          try {
+            evaldep = eval(d);
+          } catch (e) {
+            depsLoaded = false;
+          }
+        }
+        if (depsLoaded) {
+          if (depDef.callback) {
+            depDef.callback();
+            depDef.callback = null;
+          }
+        }
+      }
+    }
+    function moduleLoaded() {
+      loadModules();
+    }
+    function registerDependency(depList, cb) {
+      _pendingModules.push({
+        dependencies: depList,
+        callback: cb
+      });
+      loadModules();
+    }
+    var _errorTimeoutID;
+    function moduleError(module) {
+      _errorModules.push(module.src);
+      if (_errorTimeoutID) {
+        window.clearTimeout(_errorTimeoutID);
+      }
+      _errorTimeoutID = window.setTimeout(function (event) {
+        alert("Error loading script(s): \n\n" + _errorModules.join(" \n\n"));
+        _errorTimeoutID = null;
+      }, 500);
+    }
+  </script>
+  <script>
+    var agency = "abq",
+      agencyLong = "Albuquerque",
+      timeZone = 'America/Denver',
+      debug_stats = false;
+      debug_level = 0; // 0: none, 1: error, 2: info, 3: debug
+  </script>
+
+  <script type="text/html" id="map-area-template-ROUTEMAP">
+    <div style="height: 100%" id="google-map" data-bind="css: { 'has-margin': showSlide }, routeMapGoogle: $root.searchResult, googleMapsliveData: $root.liveData">
+  </script>
+
+  <script type="text/html" id="map-area-template-STOPDETAIL">
+    <div class="stop-detail-view-container" data-bind="css: { 'has-margin': showSlide }, stopView: $root.searchResult, stopViewLiveData: $root.liveData">
+      <div class="stop-view-container">
+        <div class="stop-view-flex-container">
+          <div class="stop-view-top stop-view-flex-item">
+            <div class="stop-view-header" data-bind="with: searchResult">
+              <h1 class="stop-view-title" data-bind="text: primaryStop.stop_name"></h1>
+              <ul class="stop-view-route-list" data-bind="foreach: relatedRouteNames">
+                <li>
+                  <a data-bind="attr: { href: '?route=' + $data }, text: $data, click: function(d, e) {$root.onLoadRoute($data);}" class="route-id mini"></a>
+                </li>
+              </ul>
+              <h2 class="stop-view-subtitle">Real-Time Stop Information</h2>
+            </div>
+            <table class="stop-view-live-bus-table" id="live-bus-table">
+              <thead>
+                <tr class="stop-view-table-header">
+                  <th colspan="2"><span>Route</span></th>
+                  <th><span>Destination</span></th>
+                  <th><span>Stop</span></th>
+                  <th colspan="2"><span>Est.</span></th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr class="stop-view-table-header">
+                  <th colspan="6"></th>
+                </tr>
+              </tfoot>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="stop-view-flex-item">
+            <div id="stop-view-map-area">
+            </div>
+            <ul class="stop-view-stop-list" data-bind="foreach: searchResult().stopNameCodes">
+              <li class="stop-view-stop-list-item">
+                <span class="bus-stop-icon-small"></span>
+                <span class="stop-name" data-bind="text: stop_name"></span>
+                <span class="stop-code" data-bind="text: stop_codes.join(' | ')"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="map-area-template-NONE">
+    <div class="flex-full-container landing">
+      <div id="start-here"></div>
+      <div id="banner">
+        <p class="bold">Albuquerque</p>
+        <p class="sub">New Mexico</p>
+        <p class="leader">Real-Time Transit Data System</p>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="slide-in-header-template-ROUTE">
+    <div class="route-slide-in-header" data-bind="with: searchResult">
+      <!--<div class="route-slide-in-buttons">
+        <div class="route-map-button slide-in-button"></div>
+        <div class="route-route-button slide-in-button"></div>
+      </div>-->
+      <div class="route-short-name-large" data-bind="text: shortName, style: {color: $root.darkenCSSColor(routeColor, 0.25)}"></div>
+      <div class="route-details">
+        <ul class="route-path-summary" data-bind="with: getFirstAndLastStops('weekday', 0)">
+          <li data-bind="text: firstStopName"></li>
+          <li>&#x21c5;</li>
+          <li data-bind="text: lastStopName"></li>
+        </ul>
+        <ul class="route-schedule-summary" data-bind="with: getFirstAndLastTripTimes('weekday', 0)">
+          <li>Hours: <span data-bind="text: first"></span> ~ <span data-bind="text: last"></span> <span>(M-F)</span></li>
+          <!-- ko if: freqMinutes > 0 -->
+          <li>Frequency: ~<span data-bind="text: freqMinutes"></span>min</li>
+          <!-- /ko -->
+          <!-- ko if: (freqMinutes === 0 && (numTrips.outbound > 0 || numTrips.inbound > 0))-->
+          <li>Trips: <span data-bind="text: numTrips.outbound"></span> &#x2191; / <span data-bind="text: numTrips.inbound"></span>            &#x2193;</li>
+          <!-- /ko -->
+        </ul>
+        <ul class="route-schedule-summary" data-bind="with: getFirstAndLastTripTimes('saturday', 0)">
+          <li>Hours: <span data-bind="text: first"></span> ~ <span data-bind="text: last"></span> <span>(Sat)</span></li>
+          <!-- ko if: freqMinutes > 0 -->
+          <li>Frequency: ~<span data-bind="text: freqMinutes"></span>min</li>
+          <!-- /ko -->
+          <!-- ko if: (freqMinutes === 0 && (numTrips.outbound > 0 || numTrips.inbound > 0))-->
+          <li>Trips: <span data-bind="text: numTrips.outbound"></span> &#x2191; / <span data-bind="text: numTrips.inbound"></span>            &#x2193;</li>
+          <!-- /ko -->
+        </ul>
+        <ul class="route-schedule-summary" data-bind="with: getFirstAndLastTripTimes('sunday', 0)">
+          <li>Hours: <span data-bind="text: first"></span> ~ <span data-bind="text: last"></span> <span>(Sun)</span></li>
+          <!-- ko if: freqMinutes > 0 -->
+          <li>Frequency: ~<span data-bind="text: freqMinutes"></span>min</li>
+          <!-- /ko -->
+          <!-- ko if: (freqMinutes === 0 && (numTrips.outbound > 0 || numTrips.inbound > 0))-->
+          <li>Trips: <span data-bind="text: numTrips.outbound"></span> &#x2191; / <span data-bind="text: numTrips.inbound"></span>            &#x2193;</li>
+          <!-- /ko -->
+        </ul>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/html" id="slide-in-header-template-STRING">
+    <h3>String: <span data-bind="text: $data"></span></h3>
+  </script>
+
+  <script type="text/html" id="slide-in-header-template-STOPDETAIL">
+    <div class="stop-slide-in-header" data-bind="with: searchResult">
+      <h2 class="stop-slide-in-title" data-bind="text: primaryStop.stop_name"></h2>
+      <h3 class="stop-slide-in-subtitle">Routes</h3>
+      <ul class="stop-view-route-list" data-bind="foreach: relatedRouteNames">
+        <li>
+          <a data-bind="attr: { href: '?route=' + $data }, text: $data, click: function(d, e) {$root.onLoadRoute($data);}" class="route-id mini"></a>
+        </li>
+      </ul>
+    </div>
+  </script>
+
+  <script type="text/html" id="slide-in-header-template-NONE">
+  </script>
+
+  <script type="text/html" id="slide-in-content-template-ROUTE">
+    <div class="rd-bus-list-details"><span class="rd-bus-count"></span> buses on route</div>
+    <div class="route-diagram-container">
+      <ul class="rd-list" data-bind="routeDiagram: searchResult, routeDiagramLiveData: liveData"></ul>
+    </div>
+  </script>
+  <script type="text/html" id="slide-in-content-template-NONE"></script>
+
+</head>
+
+<body>
+  <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <div id="o-wrapper" class="o-wrapper">
+    <div id="map-area" class="map-area" data-bind="css: { 'slide-active': showSlide }, template: { name: mapAreaTemplate}">
+    </div>
+    <div id="search-bar-container" class="search-bar-container has-search-result">
+      <div id="search-bar-ham" data-bind="click: onToggleMenu" class="search-bar-ham search-bar-icon fa fa-bars"></div>
+      <div class="search-bar-input-c has-search-result">
+        <input id="search-bar-input" data-bind="textInput: searchQuery, event: {keydown: onSearchQueryKD}, placeholder: searchPlaceholder, click: ()=>onRefreshQuery()"
+          class="search-bar-input" type="text">
+      </div>
+      <div id="search-bar-mag" data-bind="click: onPerformQuery" class="search-bar-icon search-bar-mag fa fa-search"></div>
+      <div id="search-bar-clear" data-bind="click: onClearQuery" class="search-bar-icon search-bar-clear fa fa-times"></div>
+    </div>
+    <div id="search-results-c" data-bind="css: { hidden: !queryResults() }" class="search-results-c hidden">
+      <ul id="search-results " data-bind="foreach: queryResults " class="search-results ">
+        <!-- ko if: itemType === 'route' -->
+        <li data-bind="event: { mouseover: () => $root.selectedQueryItemNumber($index()) }, click: () => $root.onLoadRoute(shortName), 
+          css: { selected: $index() === $root.selectedQueryItemNumber() }" class="search-result clickable">
+          <span data-bind="text: shortName, style: { backgroundColor: '#' + color, color: '#' + textColor }" class="route-id"></span>
+          <span data-bind="text: longName"></span>
+        </li>
+        <!-- /ko -->
+        <!-- ko if: itemType === 'stop' -->
+        <li data-bind="event: { mouseover: () => $root.selectedQueryItemNumber($index()) }, click: () => $root.onLoadStop(codes[0]),
+          css: { selected: $index() === $root.selectedQueryItemNumber() }" class="search-result clickable ">
+          <!-- ko if: names.length <= 4 -->
+          <span class="search-results-stop-title" data-bind="html: names.join('<br />')"></span><br/>
+          <!-- /ko -->
+          <!-- ko if: names.length > 4 -->
+          <span class="search-results-stop-title" data-bind="text: (names[0] + ' &amp; ' + (names.length - 1) + ' others')"></span><br/>
+          <!-- /ko -->
+          <span data-bind="text: codes.sort().join('  |  ')" class="stop-id"></span><br/>
+          <!-- ko foreach: codes -->
+          <!--<span data-bind="text: $data" class="stop-id"></span>-->
+          <!-- /ko -->
+          <!--<br/>-->
+          <!-- ko foreach: rroutes -->
+          <span data-bind="text: $data" class="route-id mini"></span>
+          <!-- /ko -->
+        </li>
+        <!-- /ko -->
+      </ul>
+    </div>
+    <div id="slide-in-container " data-bind="css: { active: showSlide, hidden: !searchResult() } " class="slide-in-container ">
+      <div id="slide-in-header " class="slide-in-header" data-bind="template: { name: slideInHeaderTemplate }"></div>
+      <div id="slide-in-content " class="slide-in-content" data-bind="template: {name: slideInContentTemplate}"></div>
+    </div>
+    <div id="slide-in-oc-button " data-bind="click: onToggleSlide, css:{ active:showSlide, hidden: !searchResult() }
+      " class="slide-in-oc-button ">
+      <i class="fa " data-bind="css: { 'fa-caret-left':showSlide, 'fa-caret-right':!showSlide() } " aria-hidden="true "></i>
+    </div>
+  </div>
+  <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/vendor/knockout-3.4.1.js"></script>
+  <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/vendor/d3.v4.min.js"></script>
+  <script async onload=moduleLoaded() onerror="moduleError(this)" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtlKsM5PAkM5BwpXjD4v5B66RZ6S0YvHo"></script>
+  <script async onload=moduleLoaded() onerror="moduleError(this)" src="../client/assets/js/index.bundle.js"></script>
+</body>
+
+</html>
