@@ -1443,7 +1443,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     }
     ;
     // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: scheduled at )(\d\d?\:\d\d [aApP][mM])/;
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {
@@ -2522,7 +2522,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6), __webpack_require__(5), __webpack_require__(8), __webpack_require__(11), __webpack_require__(12), __webpack_require__(10), __webpack_require__(27)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, route_index_service_1, route_data_service_1, route_live_data_service_1, LiveDataTripCorrelator_1, VirtualVehicleGenerator_1, LiveDataPropertyEnhancer_1, system_map_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3), __webpack_require__(6), __webpack_require__(5), __webpack_require__(8), __webpack_require__(11), __webpack_require__(12), __webpack_require__(10), __webpack_require__(27)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, Promise, route_index_service_1, route_data_service_1, route_live_data_service_1, LiveDataTripCorrelator_1, VirtualVehicleGenerator_1, LiveDataPropertyEnhancer_1, system_map_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var routeIndexService = route_index_service_1.RouteIndexService.getInstance();

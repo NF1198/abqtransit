@@ -1443,7 +1443,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     }
     ;
     // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: scheduled at )(\d\d?\:\d\d [aApP][mM])/;
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {

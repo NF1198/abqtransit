@@ -1443,7 +1443,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     }
     ;
     // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: scheduled at )(\d\d?\:\d\d [aApP][mM])/;
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {
@@ -2775,7 +2775,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, Promise) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TRIE_NODE = (function () {
