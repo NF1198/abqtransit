@@ -452,7 +452,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     Object.defineProperty(exports, "__esModule", { value: true });
     var IDX_ROUND_FUN = Math.floor;
     var IDX_ROUND_NUM = 60;
-    var TripStopIndex = (function () {
+    var TripStopIndex = /** @class */ (function () {
         function TripStopIndex(route) {
             this.route = route;
             var trips = route.data.trips;
@@ -563,7 +563,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         return TripStopIndex;
     }());
-    var RouteData = (function () {
+    var RouteData = /** @class */ (function () {
         function RouteData(data) {
             this.data = data;
             this.tripStopIndex = null;
@@ -1175,7 +1175,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteDataService = (function () {
+    var RouteDataService = /** @class */ (function () {
         function RouteDataService(agency) {
             this.agency = agency;
             this.dataCache = {};
@@ -1232,9 +1232,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             return Promise.resolve(this.dataCache[routeID]);
         };
+        RouteDataService.INSTANCE_CACHE = {};
         return RouteDataService;
     }());
-    RouteDataService.INSTANCE_CACHE = {};
     exports.RouteDataService = RouteDataService;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -1252,7 +1252,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     //
     // Call RouteIndexService.getInstance() to obtain a reference to the indexing service.
     // 
-    var RouteIndexService = (function () {
+    var RouteIndexService = /** @class */ (function () {
         function RouteIndexService() {
         }
         // Return the RouteIndexService singleton instance
@@ -1358,7 +1358,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, util_1, gtfs_util_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteLiveDataService = (function () {
+    var RouteLiveDataService = /** @class */ (function () {
         function RouteLiveDataService() {
         }
         Object.defineProperty(RouteLiveDataService.prototype, "error", {
@@ -1442,8 +1442,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         return description;
     }
     ;
-    // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
+    // Live data nextStop: "Central @ Yale (UNM) @ 1:14 PM"
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: \@ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {
@@ -1521,7 +1521,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     function copyArrayUnique(arry) {
         return Array.from((new Set(arry)).values());
     }
-    var ABQRouteLiveDataService = (function (_super) {
+    var ABQRouteLiveDataService = /** @class */ (function (_super) {
         __extends(ABQRouteLiveDataService, _super);
         function ABQRouteLiveDataService() {
             var _this = _super.call(this) || this;
@@ -1920,7 +1920,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         var TOL = BUS_ON_ROUTE_BEARING_THRESHOLD;
         return (Math.min(bearingDiff, 360 - bearingDiff) < TOL);
     }
-    var LiveDataPropertyEnhancer = (function () {
+    var LiveDataPropertyEnhancer = /** @class */ (function () {
         function LiveDataPropertyEnhancer() {
             this.vehicleCache = {};
         }
@@ -2030,7 +2030,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     var TRIP_CACHE_LIFETIME = 50;
     var VEHICLE_CACHE_LIFE = 5;
     var VEHICLE_MOVING_THRESHOLD = 1.5;
-    var LiveDataTripCorrelator = (function () {
+    var LiveDataTripCorrelator = /** @class */ (function () {
         function LiveDataTripCorrelator(routeDataService) {
             this.routeDataService = routeDataService;
             this.vehicleToTripCache = {};
@@ -2203,7 +2203,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }
     // Add virtual vehicles for schedules at least X seconds in the future
     var LOOK_AHEAD_SECONDS = 5 * 60;
-    var VirtualVehicleGenerator = (function () {
+    var VirtualVehicleGenerator = /** @class */ (function () {
         function VirtualVehicleGenerator(routeDataService) {
             this.routeDataService = routeDataService;
         }
@@ -2268,7 +2268,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5), __webpack_require__(6), __webpack_require__(0), __webpack_require__(2), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, route_data_service_1, route_index_service_1, util_1, gtfs_util_1, Promise) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var StopData = (function () {
+    var StopData = /** @class */ (function () {
         function StopData(data) {
             var _this = this;
             this.relatedStops = data.relatedStops;
@@ -2307,7 +2307,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return StopData;
     }());
     exports.StopData = StopData;
-    var StopDataService = (function () {
+    var StopDataService = /** @class */ (function () {
         function StopDataService(agency) {
             this.agency = agency;
             this.routeDataService = route_data_service_1.RouteDataService.getInstance(agency);
@@ -2414,9 +2414,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             return Promise.resolve(this.stopDataCache[stopCode]);
         };
+        StopDataService.INSTANCE_CACHE = {};
         return StopDataService;
     }());
-    StopDataService.INSTANCE_CACHE = {};
     exports.StopDataService = StopDataService;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2430,7 +2430,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ROUTE_QUERY_RE = /route=[\w\d]+/;
-    var BrowserHistoryManager = (function () {
+    var BrowserHistoryManager = /** @class */ (function () {
         function BrowserHistoryManager(callbackOptions, context, window) {
             this.callbackOptions = callbackOptions;
             this.context = context;
@@ -2530,7 +2530,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     function getVehicleTitle(vehicle) {
         return '#' + vehicle.description.id + " " + vehicle.nextStopName + ((vehicle.position.isVirtual) ? ' (scheduled)' : '');
     }
-    var GoogleMapsLiveDataBindingHandler = (function () {
+    var GoogleMapsLiveDataBindingHandler = /** @class */ (function () {
         function GoogleMapsLiveDataBindingHandler() {
         }
         GoogleMapsLiveDataBindingHandler.prototype.update = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -2690,7 +2690,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var GoogleMapsRouteMapBindingHandler = (function () {
+    var GoogleMapsRouteMapBindingHandler = /** @class */ (function () {
         function GoogleMapsRouteMapBindingHandler() {
         }
         //static styledMapType = new google.maps.StyledMapType(lightStyle);
@@ -2778,7 +2778,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, Promise) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var TRIE_NODE = (function () {
+    var TRIE_NODE = /** @class */ (function () {
         function TRIE_NODE() {
             this.data = new Set();
             this.children = {};
@@ -2794,7 +2794,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }
     // This class implements the functionality related to the
     // interactive search feature in the main search bar
-    var OnlineSearchIndex = (function () {
+    var OnlineSearchIndex = /** @class */ (function () {
         // light-weight constructor
         function OnlineSearchIndex(agency, routeIndexService) {
             this.ROUTES_PRE_QUERY = null;
@@ -2970,7 +2970,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // This knockout binding handler exposes the "placeholder" attribute on an input field
-    var PlaceholderBindingHandler = (function () {
+    var PlaceholderBindingHandler = /** @class */ (function () {
         function PlaceholderBindingHandler() {
         }
         PlaceholderBindingHandler.prototype.init = function (element, valueAccessor, allBindingsAccessor) {
@@ -2991,7 +2991,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var StopSummary = (function () {
+    var StopSummary = /** @class */ (function () {
         function StopSummary() {
         }
         return StopSummary;
@@ -3088,7 +3088,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
         };
     }
-    var RouteDiagramBindingHandler = (function () {
+    var RouteDiagramBindingHandler = /** @class */ (function () {
         function RouteDiagramBindingHandler() {
         }
         RouteDiagramBindingHandler.prototype.init = function (element, valueAccessor, allBindings, viewModel, bindingContext) { };
@@ -3236,7 +3236,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteDiagramLiveDataBindingHandler = (function () {
+    var RouteDiagramLiveDataBindingHandler = /** @class */ (function () {
         function RouteDiagramLiveDataBindingHandler() {
         }
         RouteDiagramLiveDataBindingHandler.prototype.init = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -3363,7 +3363,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         }
         return mapElement.map;
     }
-    var StopViewBindingHandler = (function () {
+    var StopViewBindingHandler = /** @class */ (function () {
         function StopViewBindingHandler() {
         }
         StopViewBindingHandler.prototype.init = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -3473,7 +3473,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     var STOPTIME_COLOR_SCALE = d3.scaleThreshold()
         .domain([0, 5 * 60, 15 * 60, 15 * 60 + 1])
         .range(['#990000', '#66cc00', '#ff9900', '#809fff', '#809fff']);
-    var StopViewLiveDataBindingHandler = (function () {
+    var StopViewLiveDataBindingHandler = /** @class */ (function () {
         function StopViewLiveDataBindingHandler() {
         }
         StopViewLiveDataBindingHandler.prototype.init = function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -3676,7 +3676,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     ko.bindingHandlers.routeDiagramLiveData = new RouteDiagramLiveDataBindingHandler_1.RouteDiagramLiveDataBindingHandler();
     // Constants
     var SEARCH_PLACEHOLDER = 'search for route or stop ...';
-    var IndexViewModel = (function () {
+    var IndexViewModel = /** @class */ (function () {
         function IndexViewModel() {
             var _this = this;
             this.routeDataService = route_data_service_1.RouteDataService.getInstance(agency);
@@ -3736,9 +3736,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         IndexViewModel.prototype.onSearchQueryKD = function (d, e) {
             switch (e.keyCode) {
-                case 13:
+                case 13:// Enter
                     break;
-                case 38:
+                case 38:// Up Arrow
                     if (!this.selectedQueryItemNumber() === null) {
                         this.selectedQueryItemNumber(0);
                     }
@@ -3747,7 +3747,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     }
                     e.preventDefault();
                     break;
-                case 40:
+                case 40:// Down Arrow
                     if (this.selectedQueryItemNumber() === null) {
                         this.selectedQueryItemNumber(0);
                     }
@@ -3874,7 +3874,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BusIconImage = (function () {
+    var BusIconImage = /** @class */ (function () {
         function BusIconImage(url, size, scaledSize) {
             this.url = url;
             this.size = new google.maps.Size(size, size);

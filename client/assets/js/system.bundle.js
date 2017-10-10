@@ -452,7 +452,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     Object.defineProperty(exports, "__esModule", { value: true });
     var IDX_ROUND_FUN = Math.floor;
     var IDX_ROUND_NUM = 60;
-    var TripStopIndex = (function () {
+    var TripStopIndex = /** @class */ (function () {
         function TripStopIndex(route) {
             this.route = route;
             var trips = route.data.trips;
@@ -563,7 +563,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         return TripStopIndex;
     }());
-    var RouteData = (function () {
+    var RouteData = /** @class */ (function () {
         function RouteData(data) {
             this.data = data;
             this.tripStopIndex = null;
@@ -1175,7 +1175,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteDataService = (function () {
+    var RouteDataService = /** @class */ (function () {
         function RouteDataService(agency) {
             this.agency = agency;
             this.dataCache = {};
@@ -1232,9 +1232,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             return Promise.resolve(this.dataCache[routeID]);
         };
+        RouteDataService.INSTANCE_CACHE = {};
         return RouteDataService;
     }());
-    RouteDataService.INSTANCE_CACHE = {};
     exports.RouteDataService = RouteDataService;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -1252,7 +1252,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     //
     // Call RouteIndexService.getInstance() to obtain a reference to the indexing service.
     // 
-    var RouteIndexService = (function () {
+    var RouteIndexService = /** @class */ (function () {
         function RouteIndexService() {
         }
         // Return the RouteIndexService singleton instance
@@ -1358,7 +1358,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, util_1, gtfs_util_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteLiveDataService = (function () {
+    var RouteLiveDataService = /** @class */ (function () {
         function RouteLiveDataService() {
         }
         Object.defineProperty(RouteLiveDataService.prototype, "error", {
@@ -1442,8 +1442,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         return description;
     }
     ;
-    // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
+    // Live data nextStop: "Central @ Yale (UNM) @ 1:14 PM"
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: \@ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {
@@ -1521,7 +1521,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     function copyArrayUnique(arry) {
         return Array.from((new Set(arry)).values());
     }
-    var ABQRouteLiveDataService = (function (_super) {
+    var ABQRouteLiveDataService = /** @class */ (function (_super) {
         __extends(ABQRouteLiveDataService, _super);
         function ABQRouteLiveDataService() {
             var _this = _super.call(this) || this;
@@ -1920,7 +1920,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         var TOL = BUS_ON_ROUTE_BEARING_THRESHOLD;
         return (Math.min(bearingDiff, 360 - bearingDiff) < TOL);
     }
-    var LiveDataPropertyEnhancer = (function () {
+    var LiveDataPropertyEnhancer = /** @class */ (function () {
         function LiveDataPropertyEnhancer() {
             this.vehicleCache = {};
         }
@@ -2030,7 +2030,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     var TRIP_CACHE_LIFETIME = 50;
     var VEHICLE_CACHE_LIFE = 5;
     var VEHICLE_MOVING_THRESHOLD = 1.5;
-    var LiveDataTripCorrelator = (function () {
+    var LiveDataTripCorrelator = /** @class */ (function () {
         function LiveDataTripCorrelator(routeDataService) {
             this.routeDataService = routeDataService;
             this.vehicleToTripCache = {};
@@ -2203,7 +2203,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }
     // Add virtual vehicles for schedules at least X seconds in the future
     var LOOK_AHEAD_SECONDS = 5 * 60;
-    var VirtualVehicleGenerator = (function () {
+    var VirtualVehicleGenerator = /** @class */ (function () {
         function VirtualVehicleGenerator(routeDataService) {
             this.routeDataService = routeDataService;
         }
@@ -2281,7 +2281,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(34), __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, VisvalingamSimplifier_1, util, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MedianCalculator = (function () {
+    var MedianCalculator = /** @class */ (function () {
         function MedianCalculator() {
             var data = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -2319,7 +2319,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         return MedianCalculator;
     }());
-    var SystemMapGenerator = (function () {
+    var SystemMapGenerator = /** @class */ (function () {
         function SystemMapGenerator(width, height) {
             this.width = width || 1280;
             this.height = height || 768;
@@ -2575,7 +2575,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     function area(t) {
         return Math.abs((t[0][0] - t[2][0]) * (t[1][1] - t[0][1]) - (t[0][0] - t[1][0]) * (t[2][1] - t[0][1]));
     }
-    var VisvalingamSimplifier = (function () {
+    var VisvalingamSimplifier = /** @class */ (function () {
         function VisvalingamSimplifier(projection) {
             this.projection = projection;
         }
@@ -2636,7 +2636,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return VisvalingamSimplifier;
     }());
     exports.VisvalingamSimplifier = VisvalingamSimplifier;
-    var MinHeap = (function () {
+    var MinHeap = /** @class */ (function () {
         function MinHeap(compare) {
             this.compare = compare;
             this.array = [];

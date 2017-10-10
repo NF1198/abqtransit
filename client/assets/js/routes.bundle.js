@@ -452,7 +452,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     Object.defineProperty(exports, "__esModule", { value: true });
     var IDX_ROUND_FUN = Math.floor;
     var IDX_ROUND_NUM = 60;
-    var TripStopIndex = (function () {
+    var TripStopIndex = /** @class */ (function () {
         function TripStopIndex(route) {
             this.route = route;
             var trips = route.data.trips;
@@ -563,7 +563,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         return TripStopIndex;
     }());
-    var RouteData = (function () {
+    var RouteData = /** @class */ (function () {
         function RouteData(data) {
             this.data = data;
             this.tripStopIndex = null;
@@ -1175,7 +1175,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, RouteData_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteDataService = (function () {
+    var RouteDataService = /** @class */ (function () {
         function RouteDataService(agency) {
             this.agency = agency;
             this.dataCache = {};
@@ -1232,9 +1232,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             return Promise.resolve(this.dataCache[routeID]);
         };
+        RouteDataService.INSTANCE_CACHE = {};
         return RouteDataService;
     }());
-    RouteDataService.INSTANCE_CACHE = {};
     exports.RouteDataService = RouteDataService;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -1252,7 +1252,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     //
     // Call RouteIndexService.getInstance() to obtain a reference to the indexing service.
     // 
-    var RouteIndexService = (function () {
+    var RouteIndexService = /** @class */ (function () {
         function RouteIndexService() {
         }
         // Return the RouteIndexService singleton instance
@@ -1358,7 +1358,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, util_1, gtfs_util_1, Promise, d3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteLiveDataService = (function () {
+    var RouteLiveDataService = /** @class */ (function () {
         function RouteLiveDataService() {
         }
         Object.defineProperty(RouteLiveDataService.prototype, "error", {
@@ -1442,8 +1442,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         return description;
     }
     ;
-    // Live data nextStop: "Central @ Yale (UNM) scheduled at 1:14 PM"
-    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: @ )(\d\d?\:\d\d [aApP][mM])/;
+    // Live data nextStop: "Central @ Yale (UNM) @ 1:14 PM"
+    var ABQ_NEXT_STOP_RE = /([\s\w\(\)\@\&\.\-\/']+)(?: \@ )(\d\d?\:\d\d [aApP][mM])/;
     var ABQ_STRING_REPLACEMENTS = [{ from: 'Monta�o', to: 'Montano' }];
     function parseNextStop(next_stop) {
         if (!next_stop) {
@@ -1521,7 +1521,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
     function copyArrayUnique(arry) {
         return Array.from((new Set(arry)).values());
     }
-    var ABQRouteLiveDataService = (function (_super) {
+    var ABQRouteLiveDataService = /** @class */ (function (_super) {
         __extends(ABQRouteLiveDataService, _super);
         function ABQRouteLiveDataService() {
             var _this = _super.call(this) || this;
@@ -1903,7 +1903,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RouteIndexGenerator = (function () {
+    var RouteIndexGenerator = /** @class */ (function () {
         function RouteIndexGenerator() {
             this._routeID = '';
             this._linkGenerator = function (d) { return "routes.html?routeID=" + d.shortName; };
