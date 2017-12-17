@@ -1464,7 +1464,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         var routeData = {};
         values.forEach(function (vg) {
             if (vg.forEach) {
-                vg.forEach(function (vv) {
+                vg.filter(function (vv) { return vv['Next Stop'] && vv['Next Stop'] !== ''; })
+                    .forEach(function (vv) {
                     var route = vv.name;
                     var nextStopParsed = parseNextStop(vv['Next Stop']);
                     if (!routeData[route]) {
@@ -1472,7 +1473,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
                     }
                     var route_vehicles = routeData[route].vehicles;
                     var coords = vv['coordinates'].split(',').map(function (c) { return +c; });
-                    var timestamp_seconds = gtfs_util_1.gtfs_time12_to_seconds(vv['Msg Time']);
+                    var timestamp_seconds = gtfs_util_1.gtfs_time12_to_seconds(vv['Msg:Time']);
                     var vehicle = {
                         description: {
                             id: vv['Vehicle #'],
@@ -1605,6 +1606,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
                     .then(function (routeLiveData) { return _this.data = routeLiveData; })
                     .then(function (routeLiveData) { return _this.notifyListeners(routeLiveData); })
                     .catch(function (err) {
+                    console.error(err);
                     console.error(err.toString() + " -- Live Data Feed Disabled");
                     _this.setError(err);
                     _this.setEnabled(false);
