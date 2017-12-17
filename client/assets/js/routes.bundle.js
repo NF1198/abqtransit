@@ -1428,7 +1428,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         var description = {};
         getXPathResults(descriptionRows).forEach(function (row) {
             var cols = getXPathResults(findElement('x:td', row));
-            var key = (cols[0] && cols[0].innerHTML) ? cols[0].innerHTML.trim() : '';
+            var key = ((cols[0] && cols[0].innerHTML) ? cols[0].innerHTML.trim() : '')
+                .replace("Msg:Time", "Msg Time");
             var value = (cols[1] && cols[1].innerHTML) ? cols[1].innerHTML.trim() : '';
             description[key] = value;
         });
@@ -1473,7 +1474,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
                     }
                     var route_vehicles = routeData[route].vehicles;
                     var coords = vv['coordinates'].split(',').map(function (c) { return +c; });
-                    var timestamp_seconds = gtfs_util_1.gtfs_time12_to_seconds(vv['Msg:Time']);
+                    var timestamp_seconds = gtfs_util_1.gtfs_time12_to_seconds(vv['Msg Time']);
                     var vehicle = {
                         description: {
                             id: vv['Vehicle #'],
